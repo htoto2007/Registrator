@@ -1,18 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Xml;
-using System.Xml.Linq;
 
 namespace Registrator
 {
-    class VitFTP
+    internal class VitFTP
     {
-
         public void CrateProfilesAllDisks()
         {
             // Создаем пользователей
@@ -24,22 +18,32 @@ namespace Registrator
                     long size = Disk.AvailableFreeSpace / 1000000000;
                     Console.WriteLine(Disk.Name + " " + size + "GB");
                     AddUser(Disk.Name, Disk.Name);
-
                 }
             }
-
-        }
-
-        public void CreateProfileAdmin()
-        {
-            AddUser("Admin", Environment.CurrentDirectory);
-            Console.WriteLine("login: Admin");
-            Console.WriteLine("Share: " + Environment.CurrentDirectory);
         }
 
         public void CreateNewConfig()
         {
             File.Copy(Environment.CurrentDirectory + "\\FileZilla Server orig.xml", Environment.CurrentDirectory + "\\FileZilla Server.xml", false);
+        }
+
+        public void CreateProfileAdmin()
+        {
+            AddUser("Admin", Environment.CurrentDirectory + "\\..\\Repository\\");
+            Console.WriteLine("Create: Admin");
+        }
+
+        public void CreateProfileSystem()
+        {
+            AddUser("SYSTEM", Environment.CurrentDirectory);
+            Console.WriteLine("Create: SYSTEM");
+        }
+
+        public bool DeleteConfig()
+        {
+            if (!File.Exists(Environment.CurrentDirectory + "\\FileZilla Server.xml")) return true;
+            File.Delete(Environment.CurrentDirectory + "\\FileZilla Server.xml");
+            return !File.Exists(Environment.CurrentDirectory + "\\FileZilla Server.xml");
         }
 
         public void Reloade()
@@ -59,7 +63,9 @@ namespace Registrator
             foreach (XmlElement xmlElem in xRoot.ChildNodes)
             {
                 if (xmlElem.Name == "Users")
+                {
                     xmlUsers = xmlElem;
+                }
             }
 
             XmlElement xmlUser = createNode(xmlDoc, "User", "", "Name", name);
@@ -205,4 +211,3 @@ namespace Registrator
         }
     }
 }
-
