@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -11,6 +12,7 @@ namespace Registrator
     {
         static void Main(string[] args)
         {
+            File.WriteAllText("Registrator-redme!.txt", "Используйте ключ /yes для запуска регистрации сервера.", Encoding.Unicode);
             if (args.GetLength(0) < 1) return;
             if (args[0] != "/yes") return;
 

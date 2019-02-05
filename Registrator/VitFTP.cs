@@ -29,7 +29,7 @@ namespace Registrator
 
         public void CreateProfileAdmin()
         {
-            AddUser("Admin", Environment.CurrentDirectory + "\\..\\Repository\\");
+            AddUser("Admin", Environment.CurrentDirectory + "\\Repository\\");
             Console.WriteLine("Create: Admin");
         }
 
